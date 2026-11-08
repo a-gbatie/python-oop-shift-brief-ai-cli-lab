@@ -42,7 +42,18 @@ class OllamaChatClient:
         # TODO: Append the assistant message after a successful response.
         # TODO: Return the assistant response text.
         # TODO: Roll back the failed user message and raise RuntimeError if needed.
-        pass
+        if not isinstance(prompt, str) or not prompt.strip():
+          raise ValueError("Prompt cannot be empty.")
+        prompt = prompt.strip()
+        
+        user_message = {"role": "user", "content": prompt}
+        self.history.append(user_message)
+        
+        try:
+          response = ollama.chat(model=self.model_name, messages=self.history)
+        except Exception as error:
+          self.history.pop()
+          raise RuntimeError(f"AI service error occured: {error}")
 
     def reset(self):
         """
@@ -52,7 +63,7 @@ class OllamaChatClient:
         - After this method runs, self.history should be an empty list.
         """
         # TODO: Clear conversation history.
-        pass
+        self.history = []
 
     def message_count(self):
         """
@@ -63,7 +74,7 @@ class OllamaChatClient:
         - Count both user messages and assistant messages.
         """
         # TODO: Return the number of stored messages.
-        pass
+        return len(self.history)
 
     def get_transcript(self):
         """
@@ -75,4 +86,4 @@ class OllamaChatClient:
         - The returned message dictionaries should also be copies.
         """
         # TODO: Return a copy of the transcript.
-        pass
+        return [message.copy() for message in self.history]
