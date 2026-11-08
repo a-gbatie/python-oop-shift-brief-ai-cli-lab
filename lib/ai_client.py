@@ -51,9 +51,29 @@ class OllamaChatClient:
         
         try:
           response = ollama.chat(model=self.model_name, messages=self.history)
+          
+          if isinstance(response, dict):
+            message = response.get("message")
+          else:
+            message = getattr(response, "message", None)
+          
+          if isinstance(message, dict):
+            content = message.get("content")
+          else:
+            content = getattr(message, "content", None)
+          
+          if not isinstance(content, str) or not content.strip():
+            raise ValueError("Assistant returned an empty or invalid response.")
+          
+          content = content.strip()
+          
+          self.history.append({"role": "assistant", "content": content})
+          return content
+        
         except Exception as error:
           self.history.pop()
-          raise RuntimeError(f"AI service error occured: {error}")
+          raise RuntimeError(f"Service error: {error}") from error
+        
 
     def reset(self):
         """
