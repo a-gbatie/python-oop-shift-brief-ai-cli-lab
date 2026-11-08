@@ -72,8 +72,7 @@ class OllamaChatClient:
         
         except Exception as error:
           self.history.pop()
-          raise RuntimeError(f"Service error: {error}") from error
-        
+          raise RuntimeError(f"AI service request failed: {error}") from error        
 
     def reset(self):
         """
