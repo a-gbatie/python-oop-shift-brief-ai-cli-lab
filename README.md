@@ -668,3 +668,78 @@ After completing the lab, answer these questions for yourself:
 4. Why should the AI client stay generic instead of including shift-handoff-specific language?
 5. How did the tests help guide your implementation?
 6. How could this reusable client pattern transfer later into a Flask API, RAG workflow, or full-stack AI application?
+
+## Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone git@github.com:a-gbatie/python-oop-shift-brief-ai-cli-lab.git
+```
+
+Replace the placeholders with your GitHub repository URL and folder name.
+
+### 2. Install Dependencies
+
+Make sure Python, Pipenv, and Ollama are installed.
+
+Install the project's Python dependencies:
+
+```bash
+pipenv install
+```
+
+### 3. Install the AI Model
+
+Download the Llama 3.2 model using Ollama:
+
+```bash
+ollama pull llama3.2:3b
+```
+
+Verify that the model is installed:
+
+```bash
+ollama list
+```
+
+The application is configured to use `llama3.2:3b`.
+
+## Running the Application
+
+### 1. Start Ollama
+
+Open a terminal and run:
+
+```bash
+ollama serve
+```
+
+Keep this terminal running while using the application.
+
+### 2. Start the CLI
+
+Open a second terminal in the project folder and run:
+
+```bash
+pipenv run python lib/shift_cli.py
+```
+
+The application displays a welcome message and a list of available commands.
+
+## Available Commands
+
+| Command | Description |
+|---------|-------------|
+| `brief <shift notes>` | Generate a new shift handoff brief |
+| `revise <feedback>` | Revise the previous brief |
+| `history` | Display the conversation message count |
+| `reset` | Clear conversation history |
+| `help` | Display available commands |
+| `exit` | Exit the application |
+| `quit` | Exit the application |
+
+Commands are case-insensitive.
+
+## Screenshot of Completed Tests
+![alt text](image.png)
